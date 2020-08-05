@@ -4,7 +4,7 @@ library(data.table)
 library(stringi)
 library(openxlsx)
 
-df = fread("/home/sergiy/Documents/Work/Nutricia/Data/pivot2.csv")
+df = fread("/home/sergiy/Documents/Work/Nutricia/Data/202006/df.csv")
 dictCompany.Brand = fread("/home/sergiy/Documents/Work/Nutricia/Global/2019/dictCompany-Brand.csv")
 
 df = df[order(Ynb, Mnb)]
@@ -19,8 +19,9 @@ df = df[!(PS0 == "IMF" & Form == "Liquid")]
 df[, YM := paste0(Ynb, stri_pad_left(Mnb, 2, pad = 0))]
 
 # Channel
-df[Channel == "PHARMA", Channel := "PH"]
 df[, Channel := "UA"]  #??
+# df[Channel == "PHARMA", Channel := "PH"]
+
 
 # GL CATEGORY
 df[, GL.CATEGORY := "ELN"]
@@ -156,5 +157,5 @@ names(df.c) = c("YM", "Channel", "GL CATEGORY",
                 "GL CONSUMER SPECIALS", "GL PACKSIZE", "GL PACKTYPE",
                 "GL MULTIPACK", "GL PRICE SEGMENT", "GL FLAVOUR", "GL STORAGE",
                 "Value 000", "Volume")
-write.xlsx(df, "/home/sergiy/Documents/Work/Nutricia/Global/2019/test4.xlsx")
+# write.xlsx(df, "/home/sergiy/Documents/Work/Nutricia/Global/2019/test4.xlsx")
 write.xlsx(df.c, "/home/sergiy/Documents/Work/Nutricia/Global/2019/test3 excl L.xlsx")
